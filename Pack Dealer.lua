@@ -22,6 +22,16 @@ function tryObjectEnter(object)
     return false
 end
 
+function onObjectLeaveContainer(container, obj)
+    if container == self and makingPacks == false and #self.getObjects() == 0 then
+        self.clearButtons()
+        self.createButton({
+            label='Pack Dealer', click_function='none', function_owner=self,
+            position={0,0.04,0}, rotation={0,180,0}, scale={0.5,0.5,0.5}, width=0, height=0, font_size=60, font_color="White"
+        })
+    end
+end
+
 function onCollisionEnter(collisionInfo)
     local collidingObject = collisionInfo.collision_object
     local collidingObjectName = tostring(collidingObject)
@@ -44,16 +54,6 @@ function spawnButtons()
     buttonParams.sizeDisplay.label = 'Size:\n' .. size
     for i, v in pairs(buttonParams) do
         self.createButton(v)
-    end
-end
-
-function update()
-    if makingPacks == false and #self.getObjects() == 0 then
-        self.clearButtons()
-        self.createButton({
-            label='Pack Dealer', click_function='none', function_owner=self,
-            position={0,0.04,0}, rotation={0,180,0}, scale={0.5,0.5,0.5}, width=0, height=0, font_size=60, font_color="White"
-        })
     end
 end
 
